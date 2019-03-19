@@ -1,7 +1,11 @@
+// SCSS Files imports
 @import 'config';
 @import 'header';
 $secondary-color: #f6f6f6;
 $primary-color: #fff;
+$subtitle-color: #ccc;
+$newsleter: #1a54e7;
+// General settings
 *,
 *:before,
 *:after {
@@ -18,7 +22,7 @@ body {
 
 .headline {
     background: $secondary-color;
-    width: 100%;
+    margin: auto;
     height: 300px;
     display: flex;
     justify-content: center;
@@ -46,12 +50,12 @@ body {
 
 .mid-bennar {
     margin-top: 15px;
-    width: 100%;
+    width: 70%;
+    padding: 10px;
+    margin: 10px auto;
     display: flex;
     justify-content: center;
     position: relative;
-    float: left;
-    text-align: center;
     /* margin-left: 25vw; */
     & .mid-bennar-image {
         display: block;
@@ -71,7 +75,7 @@ body {
     & .mid-bennar-secondary-text {
         z-index: 100;
         position: absolute;
-        color: #ccc;
+        color: $subtitle-color;
         font-size: 1em;
         font-weight: bold;
         width: 40%;
@@ -80,6 +84,102 @@ body {
     }
 }
 
+.mid-post_info {
+    width: 951px;
+    z-index: 100;
+    position: absolute;
+    font-size: 1em;
+    bottom: 0;
+    display: flex; // background: cadetblue;
+    & .mid-tag {
+        padding: 0.8rem 0 1rem;
+        width: 50%;
+        & p {
+            background: red;
+            width: 5rem;
+            color: black;
+            font-size: 1.2em;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    & .mid-post-details {
+        display: flex;
+        justify-self: stretch;
+        width: 60%;
+        justify-content: flex-end;
+        & .mid-post-details-author,
+        & .mid-post-details-date {
+            padding: 2rem 0.7rem 0.4rem 0;
+            color: $subtitle-color;
+            text-align: center;
+        }
+    }
+}
+
 main {
-    height: 100px;
+    display: flex; // justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+    padding: 10px;
+    margin: 10px auto;
+    border: none;
+    & .card {
+        border: none;
+        margin: auto;
+        width: 70%;
+        padding: 10px;
+        flex: 0 0 33%;
+        & .card-text>span {
+            color: $subtitle-color;
+        }
+    }
+}
+
+.home-newsletter {
+    padding: 80px 0;
+    background: $newsleter;
+}
+
+.home-newsletter .single {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.home-newsletter .single h2 {
+    font-size: 22px;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+.home-newsletter .single .form-control {
+    height: 50px;
+    background: rgba(255, 255, 255, 0.6);
+    border-color: transparent;
+    border-radius: 20px 0 0 20px;
+}
+
+.home-newsletter .single .form-control:focus {
+    box-shadow: none;
+    border-color: #243c4f;
+}
+
+.home-newsletter .single .btn {
+    min-height: 50px;
+    border-radius: 0 20px 20px 0;
+    background: #243c4f;
+    color: #fff;
+}
+
+footer {
+    width: 100%;
+    font-size: 1.6rem;
+    color: $subtitle-color;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20rem;
 }
