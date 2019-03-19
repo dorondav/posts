@@ -1,15 +1,23 @@
 {
   "name": "posts",
   "version": "1.0.0",
-  "description": "php post exercise",
+  "description": "php CRUD project",
   "main": "index.js",
+  "dependencies": {
+    "fsevents": "^1.2.7"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dorondav/posts.git"
+  },
   "author": "Doron Davidowitz",
   "license": "ISC",
-  "dependencies": {
-    "gulp": "^4.0.0",
-    "gulp-uglify": "^3.0.2"
-  }
+  "bugs": {
+    "url": "https://github.com/dorondav/posts/issues"
+  },
+  "homepage": "https://github.com/dorondav/posts#readme"
 }

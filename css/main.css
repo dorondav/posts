@@ -1,4 +1,145 @@
-body {
-  background: red; }
+header {
+  display: -ms-grid;
+  display: grid;
+  height: 100%;
+}
 
+header .header__image {
+  background: url(../images/slider.jpg);
+  background-size: cover;
+  height: 700px;
+}
+
+header .header__image:after {
+  content: '';
+  top: 55px;
+  right: 0;
+  width: 100%;
+  height: 700px;
+  z-index: 1;
+  background: rgba(5, 5, 5, 0.5);
+}
+
+header .header__image h1 {
+  font-size: 2.5rem;
+  color: white;
+  width: 60vw;
+  text-align: center;
+  margin: auto;
+}
+
+header .header__image .profile-pic {
+  text-align: center;
+}
+
+header .header__image .profile-pic img {
+  width: 150px;
+  display: inline-block;
+  height: 150px;
+  border: 3px solid black;
+  border-radius: 50%;
+  margin-top: 8rem;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+.headline {
+  background: #f6f6f6;
+  width: 100%;
+  height: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.headline .headline-card {
+  width: 450px;
+  height: 200px;
+  margin: 1rem;
+}
+
+.headline .headline-card .headline-image {
+  height: 200px;
+}
+
+.headline .headline-card .headline-image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.headline .headline-card .headline-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.headline .headline-card .headline-info div {
+  margin: 5px;
+}
+
+.mid-bennar {
+  margin-top: 15px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  float: left;
+  text-align: center;
+  /* margin-left: 25vw; */
+}
+
+.mid-bennar .mid-bennar-image {
+  display: block;
+  height: 314px;
+  margin: auto;
+}
+
+.mid-bennar .mid-bennar-main-text {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  width: 60%;
+  text-align: center;
+  bottom: 5rem;
+}
+
+.mid-bennar .mid-bennar-secondary-text {
+  z-index: 100;
+  position: absolute;
+  color: #ccc;
+  font-size: 1em;
+  font-weight: bold;
+  width: 40%;
+  text-align: center;
+  bottom: 0;
+}
+
+main {
+  height: 100px;
+}
 /*# sourceMappingURL=main.css.map */
