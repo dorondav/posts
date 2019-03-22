@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/posts/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/posts/css/main.css">
     <title>Posts</title>
 </head>
+
+
 
 <body>
 
@@ -25,14 +27,29 @@
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Tech</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="#">Trips</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link disabled" href="#">Nature</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">People</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts/auth/login.php">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
                     </li>
                 </ul>
             </div>
+
         </nav>

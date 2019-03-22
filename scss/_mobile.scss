@@ -1,0 +1,50 @@
+// Widescreens
+@include mediaXl {
+    .mid-post_info {
+        width: 89%;
+    }
+    .mid-bennar-main-text p {
+        font-size: 2em;
+    }
+    .mid-bennar-secondary-text {
+        font-size: 1em;
+    }
+}
+
+// Descktop & Laptops
+@include mediaLg {
+    .mid-post_info {
+        width: 95%;
+    }
+    .mid-bennar-main-text p {
+        font-size: 1em;
+        bottom: 7rem;
+    }
+    .mid-bennar-secondary-text {
+        font-size: 0.5em;
+    }
+}
+
+// Tablets & Small Laptops
+@include mediaMd {
+    .mid-post_info {
+        width: 95%;
+    }
+    .mid-bennar-main-text p {
+        font-size: 1em;
+        bottom: 7rem;
+    }
+    .mid-bennar-secondary-text {
+        font-size: 0.5em;
+    }
+}
+
+//  Smartphones
+@include mediaSm {
+    .mid-bennar-main-text p {
+        font-size: 1em;
+    }
+    .mid-bennar-secondary-text {
+        font-size: 1em;
+    }
+}

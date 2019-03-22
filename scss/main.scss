@@ -1,6 +1,7 @@
 // SCSS Files imports
 @import 'config';
 @import 'header';
+@import 'auth';
 $secondary-color: #f6f6f6;
 $primary-color: #fff;
 $subtitle-color: #ccc;
@@ -65,9 +66,9 @@ body {
     & .mid-bennar-main-text {
         z-index: 100;
         position: absolute;
-        color: white;
-        font-size: 2em;
+        color: white; // font-size: 2em;
         font-weight: bold;
+        font-size: 2rem;
         width: 60%;
         text-align: center;
         bottom: 5rem;
@@ -75,12 +76,45 @@ body {
     & .mid-bennar-secondary-text {
         z-index: 100;
         position: absolute;
-        color: $subtitle-color;
-        font-size: 1em;
+        color: $subtitle-color; // font-size: 1em;
         font-weight: bold;
         width: 40%;
         text-align: center;
         bottom: 0;
+    }
+    /* Media Queries */
+    @include mediaXl {}
+    // Descktop & Laptops
+    @include mediaLg {
+        .mid-post_info {
+            width: 95%;
+        }
+    } // Tablets & Small Laptops
+    @include mediaMd {
+        .mid-post_info {
+            width: 95%;
+        }
+        .mid-bennar-main-text p {
+            font-size: 1em;
+            bottom: 7rem;
+        }
+        .mid-bennar-secondary-text {
+            font-size: 0.7em;
+            bottom: 10px;
+        }
+    } //  Smartphones
+    @include mediaSm {
+        .mid-bennar-image {
+            height: 12rem;
+        }
+        .mid-bennar-main-text {
+            height: 5rem;
+            font-size: 0.7em;
+        }
+        .mid-bennar-secondary-text {
+            font-size: 0.5em;
+            bottom: 10px;
+        }
     }
 }
 
@@ -90,15 +124,15 @@ body {
     position: absolute;
     font-size: 1em;
     bottom: 0;
-    display: flex; // background: cadetblue;
+    display: flex;
     & .mid-tag {
         padding: 0.8rem 0 1rem;
         width: 50%;
         & p {
-            background: red;
+            background: gold;
             width: 5rem;
             color: black;
-            font-size: 1.2em;
+            font-size: 1.2rem;
             text-align: center;
             font-weight: bold;
         }
@@ -114,6 +148,19 @@ body {
             color: $subtitle-color;
             text-align: center;
         }
+    }
+}
+
+/* Media Queries */
+
+@include mediaSm {
+    .mid-post_info {
+        font-size: 0.5em;
+        bottom: 0;
+    }
+    .mid-post_info .mid-tag p {
+        font-size: 0.9rem;
+        width: 3rem
     }
 }
 
@@ -183,3 +230,5 @@ footer {
     vertical-align: middle;
     line-height: 20rem;
 }
+
+// @import 'mobile';

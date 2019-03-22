@@ -41,6 +41,15 @@ header .header__image .profile-pic img {
   margin-top: 8rem;
 }
 
+.btn-facebook {
+  background-color: #405D9D;
+  color: #fff;
+}
+
+.auth-box {
+  margin-top: 3rem;
+}
+
 *,
 *:before,
 *:after {
@@ -109,6 +118,7 @@ body {
           justify-content: center;
   position: relative;
   /* margin-left: 25vw; */
+  /* Media Queries */
 }
 
 .mid-bennar .mid-bennar-image {
@@ -121,8 +131,8 @@ body {
   z-index: 100;
   position: absolute;
   color: white;
-  font-size: 2em;
   font-weight: bold;
+  font-size: 2rem;
   width: 60%;
   text-align: center;
   bottom: 5rem;
@@ -132,11 +142,44 @@ body {
   z-index: 100;
   position: absolute;
   color: #ccc;
-  font-size: 1em;
   font-weight: bold;
   width: 40%;
   text-align: center;
   bottom: 0;
+}
+
+@media screen and (min-width: 769px) and (max-width: 1170px) {
+  .mid-bennar .mid-post_info {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mid-bennar .mid-post_info {
+    width: 95%;
+  }
+  .mid-bennar .mid-bennar-main-text p {
+    font-size: 1em;
+    bottom: 7rem;
+  }
+  .mid-bennar .mid-bennar-secondary-text {
+    font-size: 0.7em;
+    bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .mid-bennar .mid-bennar-image {
+    height: 12rem;
+  }
+  .mid-bennar .mid-bennar-main-text {
+    height: 5rem;
+    font-size: 0.7em;
+  }
+  .mid-bennar .mid-bennar-secondary-text {
+    font-size: 0.5em;
+    bottom: 10px;
+  }
 }
 
 .mid-post_info {
@@ -156,10 +199,10 @@ body {
 }
 
 .mid-post_info .mid-tag p {
-  background: red;
+  background: gold;
   width: 5rem;
   color: black;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   text-align: center;
   font-weight: bold;
 }
@@ -180,6 +223,18 @@ body {
   padding: 2rem 0.7rem 0.4rem 0;
   color: #ccc;
   text-align: center;
+}
+
+/* Media Queries */
+@media screen and (max-width: 500px) {
+  .mid-post_info {
+    font-size: 0.5em;
+    bottom: 0;
+  }
+  .mid-post_info .mid-tag p {
+    font-size: 0.9rem;
+    width: 3rem;
+  }
 }
 
 main {
