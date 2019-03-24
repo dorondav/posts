@@ -311,4 +311,9 @@ footer {
   vertical-align: middle;
   line-height: 20rem;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+}
 /*# sourceMappingURL=main.css.map */
