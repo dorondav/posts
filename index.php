@@ -1,6 +1,5 @@
 <?php 
-session_start();
-
+/* 
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
     header("location: auth/login.php");
@@ -9,9 +8,9 @@ if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['username']);
     header("location: auth/login.php");
-}
+} */
 ?>
-<?php include('./includes/header.php');
+<?php include('./components/header.php');
 ?>
 <div class="header__image">
     <div class="profile-pic"><img src='<?= $_SESSION['avatar'] ?>' alt='<?= $_SESSION['username'] ?>'></div>
@@ -20,7 +19,10 @@ if (isset($_GET['logout'])) {
 </header>
 
 <!-- latest Posts -->
-<?php include('./components/lettestPosts.php') ?>
+<?php
+print_r($_SESSION['username']);
+
+include('./components/lettestPosts.php') ?>
 
 <!-- middle bennar -->
 <?php include('./components/bennerPost.php') ?>
@@ -34,5 +36,5 @@ if (isset($_GET['logout'])) {
 <!-- Newsletter -->
 <?php include('./components/newsletter.php') ?>
 <!-- Footer -->
-<?php include('./includes/footer.php');
+<?php include('./components/footer.php');
 ?>

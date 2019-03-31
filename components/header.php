@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,15 +41,43 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+
+                    <?php
+
+                    if (isset($_SESSION['userId'])) {
+                        // If Loggedin
+                        ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">User</a>
+                        <a class="nav-link" href="#">
+                            <?= $_SESSION['username']; ?>
+                        </a>
                     </li>
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" action="/posts/includes/logout.inc.php" method="post">
+                            <button class="btn btn-outline-dark my-2 my-sm-0" name="logout-submit"
+                                type="submit">Logout</button>
+                        </form>
+                    </li>
+
+                    <?php
+
+                } else {
+                    // If not Loggedin
+                    ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/posts/auth/login.php">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
+                        <a class="nav-link" href="/posts/auth/register.php">Register</a>
                     </li>
+
+                    <?php
+
+                }
+
+                ?>
+
+
                 </ul>
             </div>
 

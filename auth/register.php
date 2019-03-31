@@ -1,50 +1,4 @@
-<?php include('../includes/header.php'); ?>
-<?php include('../connection/db.php');
-session_start();
-
-$_SESSION['message'] = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //  two password are equal to each other
-    if ($_POST['password'] == $_POST['confirmPassword']) {
-
-
-        $username = $mysqli->real_escape_string($_POST['username']);
-        $email = $mysqli->real_escape_string($_POST['email']);
-        $password = md5($_POST['password']);
-        $avatar_path = $mysqli->real_escape_string('images/' . $_FILES['avatar']['name']);
-
-        //   make sure file type is image
-
-        if (preg_match("!image!", $_FILES['avatar']['type'])) {
-
-            // copy image to image folder
-            if (copy($_FILES['avatar']['tmp_name'], $avatar_path)) {
-                $_SESSION['username'] = $username;
-                $_SESSION['avatar'] = $avatar_path;
-
-                $sql = "INSERT INTO users (username, email, password, user_image) "
-                    . "VALUES('$username', '$email', '$password', '$avatar_path')";
-
-                // if query is seccessful, redirect to index.php, done
-                if ($mysqli->query($sql) === true) {
-                    $_SESSION['message'] = "Registration successful!. added username to the database!";
-                    header('location: ../index.php');
-                } else {
-                    $_SESSION['message'] = "User Could not be added to the database!! ";
-                }
-            } else {
-                $_SESSION['message'] = "file upload failed";
-            }
-        } else {
-            $_SESSION['message'] = "Pleas only upload GIG, JPG, PNG images ";
-        }
-    } else {
-        $_SESSION['message'] = "Two passwords did not match ";
-    }
-}
-
-?>
+<?php require('../components/header.php'); ?>
 
 <div class="container auth-box">
     <div class="row">
@@ -52,9 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Register</h5>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"
-                        enctype="multipart/form-data" autocomplete="off">
-                        <div class="alert alert-error"><?= $_SESSION['message'] ?></div>
+                    <form action="../includes/register.inc.php" method="post" enctype="multipart/form-data"
+                        autocomplete="off">
+                        <!-- <div class="alert alert-error"><?= $_SESSION['message'] ?></div> -->
 
                         <div class=" form-group">
                             <label for="register__username">Username</label>
@@ -76,14 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input type="password" name="confirmPassword" autocomplete="new-password"
                                 class="form-control" id="verify__user-password" placeholder="Password">
                         </div>
-                        <div class="form-group">
+                        <!--  <div class="form-group">
                             <label for="avatar">Select Your Image</label>
                             <input type="file" name="avatar" action="image/*" class="form-control" id="avatar">
-                        </div>
+                        </div> -->
                         <p>
                             <button type="submit" name="register" class="btn btn-primary  btn-block">Register</button>
-                            <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>Connect via
-                                facebook</a>
+                            <!-- <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>Connect via
+                                facebook</a> -->
                         </p>
                     </form>
                     <small>All Ready A Member?<a href="./login.php"> Login Now!</a></small>
@@ -95,9 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </div>
 
-<?php include('../includes/footer.php'); ?>
+<?php include('../components/footer.php'); ?>
 <!-- <div class="form-group">
             <label for="register__user_image">User Image</label>
             <input type="file" name="register_user_image" class="form-control-file"
                 id="register__user_image">
-         </div> -->
+         </div>  -->
