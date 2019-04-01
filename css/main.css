@@ -1,3 +1,30 @@
+.userPate-layout {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 1fr;
+      grid-template-columns: 2fr 1fr;
+  grid-gap: 10px;
+}
+
+.userPate-layout > div {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+  margin-top: 1rem;
+}
+
+/* .userinput {
+    grid-area: 2 / 1 / span 2 / span 3;
+
+} */
+.add-post-form {
+  padding: 5px;
+}
+
+.add-post-form > button {
+  margin-top: 1rem;
+}
+
 header {
   display: -ms-grid;
   display: grid;

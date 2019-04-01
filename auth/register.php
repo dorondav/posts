@@ -8,8 +8,6 @@
                     <h5 class="card-title">Register</h5>
                     <form action="../includes/register.inc.php" method="post" enctype="multipart/form-data"
                         autocomplete="off">
-                        <!-- <div class="alert alert-error"><?= $_SESSION['message'] ?></div> -->
-
                         <div class=" form-group">
                             <label for="register__username">Username</label>
                             <input type="text" class="form-control" name="username" id="register__username"
