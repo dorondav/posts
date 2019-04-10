@@ -13,16 +13,65 @@
   margin-top: 1rem;
 }
 
-/* .userinput {
-    grid-area: 2 / 1 / span 2 / span 3;
+.userinput > form {
+  border: 1px solid black;
+  margin: 5px;
+}
 
-} */
 .add-post-form {
   padding: 5px;
 }
 
 .add-post-form > button {
   margin-top: 1rem;
+}
+
+.show-post {
+  border: 1px solid black;
+  margin: 5px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: ()[1fr];
+      grid-template-columns: repeat(1fr);
+      grid-template-areas: "title title title category" "title title title date";
+}
+
+.show-post .post-name {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: title;
+}
+
+.show-post .post-category {
+  -ms-grid-row: 1;
+  -ms-grid-column: 4;
+  grid-area: category;
+}
+
+.show-post .post-author {
+  grid-area: author;
+}
+
+.show-post .post-date {
+  -ms-grid-row: 2;
+  -ms-grid-column: 4;
+  grid-area: date;
+}
+
+.show-post:hover {
+  background: #f6f6f6;
+}
+
+.show-user-list {
+  list-style-type: none;
+  margin: 5px;
+}
+
+.show-user-item > a {
+  text-decoration: none;
+  color: black;
 }
 
 header {

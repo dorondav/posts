@@ -6,7 +6,6 @@
 
 }
 
-
 .userPate-layout>div {
     text-align: center;
     padding: 20px 0;
@@ -14,10 +13,11 @@
     margin-top: 1rem;
 }
 
-/* .userinput {
-    grid-area: 2 / 1 / span 2 / span 3;
+.userinput>form {
+    border: 1px solid black;
+    margin: 5px;
 
-} */
+}
 
 .add-post-form {
     padding: 5px;
@@ -25,4 +25,56 @@
 
 .add-post-form>button {
     margin-top: 1rem;
+}
+
+// show user 
+
+.show-post {
+    border: 1px solid black;
+    margin: 5px;
+    display: grid;
+    grid-template-columns: repeat(1fr);
+    // grid-template-rows: 1fr;
+    grid-template-areas:
+        "title title title category"
+        "title title title date";
+
+    // background: thistle;
+
+    & .post-name {
+        grid-area: title;
+    }
+
+
+    & .post-category {
+        grid-area: category;
+
+    }
+
+    & .post-author {
+        grid-area: author;
+        // background: chartreuse;
+    }
+
+    & .post-date {
+        grid-area: date;
+        // background: brown;
+
+    }
+}
+
+.show-post:hover {
+    background: #f6f6f6;
+}
+
+
+.show-user-list {
+    list-style-type: none;
+    margin: 5px;
+}
+
+.show-user-item>a {
+    text-decoration: none;
+    color: black;
+
 }
