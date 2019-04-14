@@ -1,9 +1,9 @@
-<?php 
+<?php
 session_start();
 
 if (isset($_POST['save'])) {
     require('../connection/db.php');
-    $posTitle =  mysqli_real_escape_string($conn, $_POST['post_title']);
+    $postTitle =  mysqli_real_escape_string($conn, $_POST['post_title']);
     $postDesc =  mysqli_real_escape_string($conn, $_POST['post_desc']);
     $postBody =  mysqli_real_escape_string($conn, $_POST['post_body']);
     $authorId = $_SESSION['userId'];
@@ -13,7 +13,7 @@ if (isset($_POST['save'])) {
     $postImage = $conn->real_escape_string('../images/posts/' . $_FILES['post_image']['name']);
 
 
-    if (empty($posTitle) || empty($postDesc) || empty($postBody) || empty($postImage)) {
+    if (empty($postTitle) || empty($postDesc) || empty($postBody) || empty($postImage)) {
         header("Location: ../user.php?userid=" . $_SESSION['userId'] . "&error=emptyfileds");
         exit();
     } else {
@@ -29,9 +29,9 @@ if (isset($_POST['save'])) {
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
                     header("Location: ../user.php?userid=" . $_SESSION['userId'] . "&=sqlerror");
                     exit();
-                }else {
+                } else {
                     // bind params
-                    mysqli_stmt_bind_param($stmt, 'ssssss', $posTitle, $postDesc,  $postBody, $postImage, $authorId, $date);
+                    mysqli_stmt_bind_param($stmt, 'ssssss', $postTitle, $postDesc,  $postBody, $postImage, $authorId, $date);
                     mysqli_stmt_execute($stmt);
                     header("Location: ../user.php?userid=" . $_SESSION['userId'] . "&post=success");
                     exit();
@@ -39,4 +39,32 @@ if (isset($_POST['save'])) {
             }
         }
     }
-} 
+}
+
+
+
+
+/* 
+// Update 
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    $update = true;
+    $result = $mysqli->query("SELECT * FROM aericle WHERE id=$id") or die($mysqli->error);
+    if (count($result) == 1) {
+        $row = $result->fetch_array();
+        $name = $row['name'];
+        $location = $row['location'];
+    }
+}
+if (isset($_POST['update'])) {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $location = $_POST['location'];
+
+    $mysqli->query("UPDATE data SET name='$name', location='$location' WHERE id='$id'") or die($mysqli->error);
+
+    $_SESSION['message'] = 'Record has been updated';
+    $_SESSION['msg_type'] = "warning";
+
+    header("location: index.php");
+} */

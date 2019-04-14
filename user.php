@@ -5,32 +5,114 @@
 if (isset($_SESSION['userId'])) {
     require_once('./connection/db.php');
 
+    //* get article information from database
+
+    if (isset($_GET['edit'])) {
+        $articleId = $_GET['edit'];
+        $sql = "SELECT * FROM articles WHERE articleId = ?";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: ./user.php?userid=" . $_SESSION['userId']);
+            exit();
+        } else {
+            mysqli_stmt_bind_param($stmt, 's', $articleId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($row = mysqli_fetch_assoc($result)) {
+                $articleId = $row['articleId'];
+                $title = $row['title'];
+                $postBody = $row['articleBody'];
+                $description = $row['description'];
+                $postImage = $row['postImage'];
+                $category = $row['category'];
+
+
+                //* update form
+                if (isset($_POST['save'])) {
+                    $postTitle =  mysqli_real_escape_string($conn, $_POST['post_title']);
+                    $postDesc =  mysqli_real_escape_string($conn, $_POST['post_desc']);
+                    $postBody =  mysqli_real_escape_string($conn, $_POST['post_body']);
+                    $category =  mysqli_real_escape_string($conn, $_POST['post_cat']);
+
+                    $postImage = $conn->real_escape_string('./images/posts/' . $_FILES['post_image']['name']);
+
+                    // * upload image to database
+                    if (preg_match("!image!", $_FILES['post_image']['type'])) {
+                        //* copy image to image folder
+                        if (copy($_FILES['post_image']['tmp_name'], $postImage)) {
+
+                            $sql = "UPDATE articles SET title=?, description=?, articleBody=?, postImage=?, category=? WHERE articleId='$articleId'";
+                            $stmt = mysqli_stmt_init($conn);
+                            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                print_r($conn);
+                                die("Connection error: " . mysqli_connect_error());
+                                header("Location: ./user.php?edit=postupdate" .  $articleId . "&=sqlerror");
+                                exit();
+                            } else {
+                                // bind params
+                                mysqli_stmt_bind_param($stmt, 'sssss', $postTitle, $postDesc,  $postBody, $postImage, $category);
+                                mysqli_stmt_execute($stmt);
+                                header("Location: ./user.php?edit=" .  $articleId .  "&postupdate=success");
+                                exit();
+                            }
+                        } else {
+                            header("Location: ./user.php?edit=" .  $articleId .  "&error=imageupdatefaild");
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        // * reset form
+        $title = '';
+        $postBody = '';
+        $description = '';
+        $postImage = '';
+        $category = '';
+
+        // * add new post to database
+
+        if (isset($_POST['save'])) {
+            $postTitle =  mysqli_real_escape_string($conn, $_POST['post_title']);
+            $postDesc =  mysqli_real_escape_string($conn, $_POST['post_desc']);
+            $postCat =  mysqli_real_escape_string($conn, $_POST['post_cat']);
+
+            $postBody =  mysqli_real_escape_string($conn, $_POST['post_body']);
+            $authorId = $_SESSION['userId'];
+            $date = date('Y-m-d');
+
+            $postImage = $conn->real_escape_string('./images/posts/' . $_FILES['post_image']['name']);
+
+
+            if (empty($postTitle) || empty($postDesc) || empty($postBody) || empty($postImage) || $postCat == 'default') {
+                header("Location: ./user.php?userid=" . $_SESSION['userId'] . "&error=emptyfileds");
+                exit();
+            } else {
+
+                // * upload image to database
+                if (preg_match("!image!", $_FILES['post_image']['type'])) {
+                    // copy image to image folder
+                    if (copy($_FILES['post_image']['tmp_name'], $postImage)) {
+                        // insert post to database
+                        $sql = "INSERT INTO articles (title, description, articleBody, postImage, authorId, date, category) VALUES (?,?,?,?,?,?,?)";
+                        $stmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                            header("Location: ./user.php?userid=" . $_SESSION['userId'] . "&=sqlerror");
+                            exit();
+                        } else {
+                            // bind params
+                            mysqli_stmt_bind_param($stmt, 'sssssss', $postTitle, $postDesc,  $postBody, $postImage, $authorId, $date, $postCat);
+                            mysqli_stmt_execute($stmt);
+                            header("Location: ./user.php?userid=" . $_SESSION['userId'] . "&post=success");
+                            exit();
+                        }
+                    }
+                }
+            }
+        }
+    }
     ?>
-<!-- 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#"><?php if (isset($_SESSION['userId'])) {
-                                            echo $_SESSION['username'];
-                                        }  ?></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#user-navbar"
-        aria-controls="user-navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="user-navbar">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/posts/index.php">Posts <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/posts/index.php">Edit User</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Posts</a>
-            </li>
-
-        </ul>
-
-    </div>
-</nav> -->
 
 <!-- User Container: -->
 <div class="userPate-layout">
@@ -38,26 +120,57 @@ if (isset($_SESSION['userId'])) {
     <div class="userinput">
         <h1>Add new post</h1>
 
-        <form action="./includes/posts.inc.php" class="add-post-form" method="post" enctype="multipart/form-data">
+        <!-- <form action="./includes/posts.inc.php" class="add-post-form" method="post" enctype="multipart/form-data"> -->
+        <form action="" class="add-post-form" method="post" enctype="multipart/form-data">
+
             <div class="form-group">
-                <input type="text" class="form-control" name="post_title" id="post_title" placeholder="Enter Title">
+                <input type="text" class="form-control" name="post_title" id="post_title" placeholder="Enter Title"
+                    value="<?php echo $title; ?>">
             </div>
             <div class="form-group">
+                <select class="form-control" name="post_cat" value="<?php echo $category; ?>">
+                    <!-- <option value="default">Select Category</option> -->
+
+
+                    <?php
+                        if ($category == '') {
+                            ?>
+                    <option value="default">Select Category</option>
+                    <?php } else {
+                        ?>
+                    <option value="<?= $category ?>"><?= $category ?></option>
+
+                    <?php
+                    } ?>
+                    <option value="trip">Trips</option>
+
+                    <!-- Get the default value from database -->
+
+                    <option value="tech">Tech</option>
+                    <option value="trip">Trips</option>
+                    <option value="nature">Nature</option>
+                    <option value="people">People</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <input type="text" class="form-control" id="post_desc" name="post_desc"
-                    placeholder="Enter Post Description">
+                    placeholder="Enter Post Description" value="<?php echo $description; ?>">
             </div>
             <div class="form-group">
                 <textarea class="form-control" id="post_body" name="post_body" placeholder="Post Content"
-                    rows="10"></textarea>
+                    rows="10"><?php echo $postBody; ?></textarea>
             </div>
             <div class="custom-file">
+                <!-- !echo the image path automatcliy befure form update  -->
                 <input type="file" class="custom-file-input-dark" name="post_image" id="validatedCustomFile">
+                <input type="hidden" name="post_image">
+
                 <label class="custom-file-label" for="validatedCustomFile">Post Image...</label>
             </div>
             <button type="submit" name="save" class="btn btn-dark btn-lg btn-block">Save New Post</button>
-            <button type="submit" name="delete-post" class="btn btn-danger btn-lg btn-block">Delete Post</button>
+            <a href="./user.php?userid=<?= $_SESSION['userId'] ?>" class="btn btn-danger btn-lg btn-block">Cancel</a>
 
-            <button type="submit" name="edit-post" class="btn btn-dark btn-lg btn-block">Edit Post</button>
 
         </form>
 
@@ -69,33 +182,35 @@ if (isset($_SESSION['userId'])) {
         <h1>My Posts</h1>
         <ul class="show-user-list">
 
-            <?php 
-            $sql = "SELECT * FROM articles WHERE authorId = ?";
-            $stmt = mysqli_stmt_init($conn);
-            $authorId = $_SESSION['userId'];
+            <?php
+                $sql = "SELECT * FROM articles WHERE authorId = ?";
+                $stmt = mysqli_stmt_init($conn);
+                $authorId = $_SESSION['userId'];
 
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                header("Location: user.php?userid=" . $_SESSION['userId']);
-                exit();
-            } else {
-                mysqli_stmt_bind_param($stmt, 's', $authorId);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                while ($row = mysqli_fetch_assoc($result)) {
-                    ?>
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    header("Location: user.php?userid=" . $_SESSION['userId']);
+                    exit();
+                } else {
+                    mysqli_stmt_bind_param($stmt, 's', $authorId);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
             <li class="show-user-item">
-                <a href="./user.php?article=<?= $row['articleId'] ?>">
-                    <div class="show-post">
-                        <div class="post-name"><?= $row['title'] ?></div>
-                        <small class="post-date"><?= $row['date'] ?></small>
-                        <small class="post-category"><?= $row['category'] ?></small>
-                    </div>
-                </a></li>
+                <div class="show-post">
+                    <div class="post-name"><?= $row['title'] ?></div>
+                    <small class="post-date"><?= $row['date'] ?></small>
+                    <small class="post-category"><?= $row['category'] ?></small>
+
+                    <a class="btn btn-dark btn-lg" href="./user.php?edit=<?= $row['articleId'] ?>">Edit</a>
+                    <a class="btn btn-danger btn-lg" href="./user.php?delete=<?= $row['articleId'] ?>">Delete</a>
+                </div>
+            </li>
             <?php
 
-        }
-    }
-    ?>
+                }
+            }
+            ?>
 
 
 
@@ -114,4 +229,4 @@ if (isset($_SESSION['userId'])) {
 ?>
 
 
-<?php require('./components/footer.php'); ?>
+<?php require('./components/footer.php');  ?>

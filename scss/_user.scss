@@ -73,8 +73,23 @@
     margin: 5px;
 }
 
+.show-user-item {
+    display: flex;
+}
+
+.show-post {
+    width: 100%;
+}
+
+.show-post>a {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+}
+
+/* 
 .show-user-item>a {
     text-decoration: none;
     color: black;
 
-}
+} */
