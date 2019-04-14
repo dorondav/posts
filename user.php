@@ -31,6 +31,16 @@ if (isset($_SESSION['userId'])) {
                 $category = $row['category'];
 
 
+                // * delete article
+
+
+                if (isset($_POST['delete'])) {
+                    $conn->query("DELETE FROM articles WHERE articleId=$articleId") or die($conn->error);
+                    header("Location: ./user.php?userid=" . $_SESSION['userId']);
+                    exit();
+                };
+
+
                 //* update form
                 if (isset($_POST['save'])) {
                     $postTitle =  mysqli_real_escape_string($conn, $_POST['post_title']);
@@ -176,6 +186,8 @@ if (isset($_SESSION['userId'])) {
                 if ($update == true) {
                     ?>
             <a href="./user.php?userid=<?= $_SESSION['userId'] ?>" class="btn btn-danger btn-lg btn-block">Cancel</a>
+            <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+
             <?php
             } ?>
 
@@ -213,8 +225,7 @@ if (isset($_SESSION['userId'])) {
                     <small class="post-category"><?= $row['category'] ?></small>
 
                     <a class="btn btn-dark btn-lg" href="./user.php?edit=<?= $row['articleId'] ?>">Edit</a>
-                    <a class="btn btn-danger btn-lg" href="./user.php?delete=<?= $row['articleId'] ?>">Delete</a>
-
+                    <!-- <a class="btn btn-danger btn-lg" href="./user.php?delete=<?= $row['articleId'] ?>">Delete</a> -->
                 </div>
             </li>
             <?php
@@ -222,25 +233,6 @@ if (isset($_SESSION['userId'])) {
                 }
             }
             ?>
-
-            <?php
-
-                $deleteMgs = '<div class="alert alert-danger" role="alert">Are you sure?</div>';
-
-                if (isset($_GET['delete'])) {
-                    $id = $_GET['delete'];
-                    $conn->query("DELETE FROM articles WHERE articleId=$id") or die($conn->error);
-                    echo $deleteMgs
-                    ?>
-
-            <?php
-
-
-                // header("Location: user.php?deleted=" . $id . '&articledeleted');
-            }
-
-            ?>
-
 
 
         </ul>
