@@ -4,11 +4,14 @@
 <?php
 if (isset($_SESSION['userId'])) {
     require_once('./connection/db.php');
+    $update = false;
 
     //* get article information from database
 
     if (isset($_GET['edit'])) {
         $articleId = $_GET['edit'];
+        $update = true;
+
         $sql = "SELECT * FROM articles WHERE articleId = ?";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -70,7 +73,6 @@ if (isset($_SESSION['userId'])) {
         $description = '';
         $postImage = '';
         $category = '';
-
         // * add new post to database
 
         if (isset($_POST['save'])) {
@@ -104,7 +106,7 @@ if (isset($_SESSION['userId'])) {
                             // bind params
                             mysqli_stmt_bind_param($stmt, 'sssssss', $postTitle, $postDesc,  $postBody, $postImage, $authorId, $date, $postCat);
                             mysqli_stmt_execute($stmt);
-                            header("Location: ./user.php?userid=" . $_SESSION['userId'] . "&post=success");
+                            header("Location: ./user.php?userid=" . $_SESSION['userId']);
                             exit();
                         }
                     }
@@ -169,17 +171,25 @@ if (isset($_SESSION['userId'])) {
                 <label class="custom-file-label" for="validatedCustomFile">Post Image...</label>
             </div>
             <button type="submit" name="save" class="btn btn-dark btn-lg btn-block">Save New Post</button>
+
+            <?php
+                if ($update == true) {
+                    ?>
             <a href="./user.php?userid=<?= $_SESSION['userId'] ?>" class="btn btn-danger btn-lg btn-block">Cancel</a>
+            <?php
+            } ?>
 
 
         </form>
 
     </div>
 
-
+    <!-- show user pists by user id: -->
+    <!-- show user pists by user id: -->
 
     <div class=" userPosts">
         <h1>My Posts</h1>
+
         <ul class="show-user-list">
 
             <?php
@@ -204,6 +214,7 @@ if (isset($_SESSION['userId'])) {
 
                     <a class="btn btn-dark btn-lg" href="./user.php?edit=<?= $row['articleId'] ?>">Edit</a>
                     <a class="btn btn-danger btn-lg" href="./user.php?delete=<?= $row['articleId'] ?>">Delete</a>
+
                 </div>
             </li>
             <?php
@@ -212,12 +223,28 @@ if (isset($_SESSION['userId'])) {
             }
             ?>
 
+            <?php
+
+                $deleteMgs = '<div class="alert alert-danger" role="alert">Are you sure?</div>';
+
+                if (isset($_GET['delete'])) {
+                    $id = $_GET['delete'];
+                    $conn->query("DELETE FROM articles WHERE articleId=$id") or die($conn->error);
+                    echo $deleteMgs
+                    ?>
+
+            <?php
+
+
+                // header("Location: user.php?deleted=" . $id . '&articledeleted');
+            }
+
+            ?>
+
 
 
         </ul>
     </div>
-
-
 </div>
 <?php
 
